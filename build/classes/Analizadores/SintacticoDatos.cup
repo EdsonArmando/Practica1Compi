@@ -1,0 +1,158 @@
+/*----------------------------------------------------------------------------
+--------------------- 1ra. Area: Codigo de Usuario
+----------------------------------------------------------------------------*/
+
+//-------> Importaciones 
+//-------> Paquetes 
+
+package Analizadores;
+import Datos.Archivo.TipoItemRegistro;
+import java.util.*; 
+import java_cup.runtime.Symbol;
+import Datos.*;
+
+//-------> Codigo para el parser, variables, metodos
+
+parser code
+{:  
+    /*public static LinkedList<AcepErr> TablaErr=new LinkedList<AcepErr>();*/
+
+    public Archivo resultado;
+    //Metodo al que se llama automaticamente ante algun error sintactico
+    public void syntax_error(Symbol s)
+    {        
+        String lexema = s.value.toString();
+        int fila = s.right;
+        int columna = s.left;
+        
+        System.out.println("!!!!!!! Error Sintactico Recuperado !!!!!!!");
+        System.out.println("\t\tLexema: "+lexema);
+        System.out.println("\t\tFila: "+fila);
+        System.out.println("\t\tColumna: "+columna);
+
+        //lista_errores.add(new ErrorT(lexema, fila, columna,"sintactico" ,"Simbolo no esperado"));
+        /*AcepErr datos =new AcepErr(lexema, "ERROR SINTACTICO" ,fila,columna,"Simbolo no esperado");
+            TablaErr.add(datos);
+            */
+    }
+
+    //Metodo al que se llama en el momento en que ya no es posible una recuperacion de errores
+    public void unrecovered_syntax_error(Symbol s) throws java.lang.Exception
+    {        
+        String lexema = s.value.toString();
+        int fila = s.right;
+        int columna = s.left;
+        
+        System.out.println("!!!!!!! Error Sintactico, Panic Mode !!!!!!! ");
+        System.out.println("\t\tLexema: "+lexema);
+        System.out.println("\t\tFila: "+fila);
+        System.out.println("\t\tColumna: "+columna);
+
+       /*AcepErr datos =new AcepErr(lexema, "ERROR SINTACTICO" ,fila,columna,"Simbolo no esperado Error Fatal");
+                   TablaErr.add(datos);
+                  */
+        //lista_errores.add(new ErrorT(lexema, fila, columna,"sintactico" ,"Simbolo no esperado, Panic Mode"));
+    }
+
+    public void semantic(Symbol cur_token, String n) 
+    {
+        System.out.println("error semantico ");
+    }
+
+    public void semantic(String msg, Object obj) {}
+
+:}
+
+
+//-------> Codigo para las acciones gramaticales
+
+action code
+{:
+//METODOS Y VARIABLES QUE SOLO PUEDEN SER ACCEDIDAS DENTRO DEL PARSER
+int exponente(int exp){
+    int resultado= 1;
+    for(int i=1; i<exp; i++){
+        resultado = resultado *2;
+    }
+    return resultado;
+}
+
+:}  
+
+/*----------------------------------------------------------------------------
+--------------------- 2da. Area: Declaraciones
+----------------------------------------------------------------------------*/
+
+//-------> TERMINALES
+terminal apar, cpar, coma, puntoComa;
+terminal allave, cllave, acorch, ccorch, igual;
+terminal String id, numero, cadena, claves, registros;
+
+//-------> NO TERMINALES
+non terminal Double E;
+non terminal Archivo INICIO;
+non terminal LinkedList<String> LISTAID, LISTADECLARACION;
+non terminal String DECLARACION, CLAVEREGISTRO, LISTACLAVES; 
+non terminal LinkedList<Registro> LISTAREGISTROS;
+non terminal LinkedList<ItemRegistro> LISTAITEM;
+non terminal Archivo ARCHIVO;
+non terminal ItemRegistro ITEM;
+
+start with INICIO;
+
+
+/*-------------------------------------------------------------------
+--------------------- 3ra. y ultima area: Reglas Sintacticas
+-------------------------------------------------------------------*/
+INICIO::=  ARCHIVO:ls{:
+            parser.resultado = ls;
+        :}
+        ;
+ARCHIVO::= claves:a igual acorch LISTACLAVES ccorch registros igual acorch LISTAREGISTROS:d ccorch{:
+                RESULT = new Archivo(d, aright, aleft);        
+            :}
+            ;
+
+LISTACLAVES ::= LISTACLAVES coma ITEM
+            | ITEM
+            ;
+
+LISTAREGISTROS ::= LISTAREGISTROS:a allave LISTAITEM:b cllave {: 
+                    RESULT = a;
+                    RESULT.add(new Registro(b, false, aright, aleft));
+                 :}
+                | allave LISTAITEM:a cllave {: 
+                    RESULT = new LinkedList<>();
+                    RESULT.add(new Registro(a, true, aright, aleft)); 
+                :}
+                ;
+
+LISTAITEM ::= LISTAITEM:a coma ITEM:b {: 
+                RESULT = a;
+                RESULT.add(b);
+           :}
+            | ITEM:a {: 
+                RESULT = new LinkedList<>();
+                RESULT.add(a);
+            :}
+          ;
+
+ITEM ::= cadena:a {: RESULT = new ItemRegistro(TipoItemRegistro.CADENA, a, aright, aleft); :}
+       | numero:a {: RESULT = new ItemRegistro(TipoItemRegistro.NUMERO, a, aright, aleft); :}
+       ;
+
+/*************************************
+
+//ENTRADA
+//Ejemplos de la definición de los registros de un archivo 
+
+claves = [
+    "1024" // Registro 1
+]
+Registros = [
+    {1, "Nery", "Galvez"} // Registro 1
+    {2, "Miguel", "Ruano"} // Registro 2
+    {3, "Erick", "Tejaxún"} // Registro 3
+]
+
+************************************/

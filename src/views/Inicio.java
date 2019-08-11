@@ -5,7 +5,14 @@
  */
 package views;
 
+import Analizadores.a_Lexico_rep;
+import Analizadores.analisis_sintacticos_re;
+import Entorno.Entorno;
+import Instruccion.Instruccion;
 import java.awt.Component;
+import java.io.BufferedReader;
+import java.io.StringReader;
+import java.util.LinkedList;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
@@ -37,20 +44,15 @@ public class Inicio extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane2 = new javax.swing.JScrollPane();
-        idText2 = new javax.swing.JTextArea();
         jButton1 = new javax.swing.JButton();
         jTabbedPane1 = new javax.swing.JTabbedPane();
+        salidaConsola = new java.awt.TextArea();
         jMenuBar1 = new javax.swing.JMenuBar();
         idAbrir = new javax.swing.JMenu();
         idGuardar = new javax.swing.JMenu();
         idGuardarComo = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        idText2.setColumns(20);
-        idText2.setRows(5);
-        jScrollPane2.setViewportView(idText2);
 
         jButton1.setText("Analizar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -94,11 +96,11 @@ public class Inicio extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2)
-                    .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 599, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(salidaConsola, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 595, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton1)
                 .addGap(14, 14, 14))
@@ -114,8 +116,8 @@ public class Inicio extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addComponent(salidaConsola, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(31, Short.MAX_VALUE))
         );
 
         pack();
@@ -124,10 +126,31 @@ public class Inicio extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         Component comp = jTabbedPane1.getComponentAt(jTabbedPane1.getSelectedIndex());
         tex1=(JTextArea) comp;
-        JOptionPane.showMessageDialog(null, "Hola Mundo "+ tex1.getText());
-       
+        String datos = tex1.getText();
+        analizarEntrada(datos);
     }//GEN-LAST:event_jButton1ActionPerformed
-
+    public void analizarEntrada(String datos){
+        String entrada = datos;
+        salidaConsola.setText("");
+        a_Lexico_rep lexico = new a_Lexico_rep(new BufferedReader(new StringReader(entrada)));
+        lexico.salidaConsola = salidaConsola;
+        analisis_sintacticos_re sintactico = new analisis_sintacticos_re(lexico);
+        sintactico.salidaConsola = salidaConsola;
+        try{
+            sintactico.parse();
+            recorrerArbol(sintactico);
+        }catch(Exception e){
+            System.out.println(e);
+        }
+    }
+     public void recorrerArbol(analisis_sintacticos_re sintactico){
+        Entorno ent = new Entorno(null);
+        LinkedList<Instruccion> listaInstrucciones = sintactico.resultado;
+        for (Instruccion i : listaInstrucciones) {
+            if(i!=null)
+                i.ejecutar(ent);
+        }
+    }
     private void idAbrirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idAbrirActionPerformed
         
     }//GEN-LAST:event_idAbrirActionPerformed
@@ -194,11 +217,10 @@ public class Inicio extends javax.swing.JFrame {
     private javax.swing.JMenu idAbrir;
     private javax.swing.JMenu idGuardar;
     private javax.swing.JMenu idGuardarComo;
-    private javax.swing.JTextArea idText2;
     private javax.swing.JButton jButton1;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
+    public static java.awt.TextArea salidaConsola;
     // End of variables declaration//GEN-END:variables
    
 }
