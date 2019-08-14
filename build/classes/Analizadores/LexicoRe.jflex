@@ -127,6 +127,9 @@ id = {letra}+({letra}|{digito}|"_")*
 <YYINITIAL> "numerico"       {   System.out.println("Reconocido: <<"+yytext()+">>, tokenNunerico");
                                 return new Symbol(Simbolos.numerico, yycolumn, yyline, yytext());}
 
+<YYINITIAL> "cadena"       {   System.out.println("Reconocido: <<"+yytext()+">>, tokenCadena");
+                                return new Symbol(Simbolos.cadena, yycolumn, yyline, yytext());}
+
 <YYINITIAL> "archivo"       {   System.out.println("Reconocido: <<"+yytext()+">>, tokenArchivo");
                                 return new Symbol(Simbolos.archivo, yycolumn, yyline, yytext());}
 
@@ -138,6 +141,10 @@ id = {letra}+({letra}|{digito}|"_")*
 
 <YYINITIAL> "contarsi"       {   System.out.println("Reconocido: <<"+yytext()+">>, tokenContarSi");
                                 return new Symbol(Simbolos.contarSi, yycolumn, yyline, yytext());}
+
+<YYINITIAL> "obtenersi"       {   System.out.println("Reconocido: <<"+yytext()+">>, tokenObtenerSi");
+                                return new Symbol(Simbolos.obtenerSi, yycolumn, yyline, yytext());}
+
 
 <YYINITIAL> "contar"       {   System.out.println("Reconocido: <<"+yytext()+">>, tokenContar");
                                 return new Symbol(Simbolos.contar, yycolumn, yyline, yytext());}

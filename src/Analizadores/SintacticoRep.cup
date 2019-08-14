@@ -86,8 +86,8 @@ action code
 //-------> TERMINALES
 terminal apar, cpar, coma, puntoComa, igual, igualigual, mayor, menor, mayorigual, menorigual, diferenteque;
 terminal mas, menos, por, dividir;
-terminal String id, numero, cadena, claves, registros, contar, sumar, contarSi;
-terminal String imprimir, numerico, archivo, leerarchivo, graficar;
+terminal String id, numero, cadena, claves, registros, contar, sumar, contarSi, obtenerSi;
+terminal String imprimir,  numerico, archivo, leerarchivo, graficar;
 
 //-------> NO TERMINALES
 non terminal LinkedList<Instruccion> INICIO, LISTAINSTRUCCION;
@@ -128,6 +128,7 @@ DECLARACION ::= TIPO:tipo id:nombre igual E:asignacion puntoComa {: RESULT = new
 
 TIPO ::= numerico:a {: RESULT = EnumTipoDato.NUMERICO; :}
       | archivo:a {: RESULT = EnumTipoDato.ARCHIVO; :}
+      | cadena:a {: RESULT = EnumTipoDato.CADENA; :}
       ;
 
 GRAFICAR ::= graficar:a apar E:b coma E:c coma E:d coma E:r coma E:f cpar puntoComa {: RESULT = new Graficar(b, c, d, r, f, aright, aleft); :}
@@ -148,6 +149,7 @@ LISTAE ::= LISTAE:l coma E:a{:
 E ::= leerarchivo:l apar E:ruta cpar {: RESULT = new FuncionLeerArchivo(ruta, lright, lleft); :}
       | contar:a apar E:b cpar {: RESULT = new Contar(b); :}
       | contarSi:a apar E:b coma E:c coma RELA:d coma E:val cpar {: RESULT = new ContarSi(b, c, d, val, aright, aleft); :}
+      | obtenerSi:a apar E:n coma E:c coma RELA:d coma E:f cpar {: RESULT = new ObtenerSi(n, c, d, f, aright, aleft); :}
       | sumar:a apar E:b coma E:c cpar {: RESULT = new Sumar(b, c, aright, aleft); :}
       | numero:a {: RESULT = new Literal(EnumTipoDato.NUMERICO, a); :}
       | cadena:a {: RESULT = new Literal(EnumTipoDato.CADENA, a); :}

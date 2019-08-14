@@ -20,6 +20,9 @@ public class Archivo {
     int fila, columna;
     LinkedList<Registro> listaRegistros;
     LinkedList<ItemRegistro> listaClaves;
+    LinkedList<ItemRegistro> regi;
+    ItemRegistro auxItem=null;
+    Registro aux=null;
     public Archivo(){}
     public Archivo(LinkedList<ItemRegistro> listaClaves,LinkedList<Registro> listaRegistros, int fila, int columna){
         this.listaRegistros = listaRegistros;
@@ -65,7 +68,30 @@ public class Archivo {
         }
         return new Literal(Simbolo.EnumTipoDato.NUMERICO, salida);
     }
-     public  LinkedList<Registro> getListaRegistros(){
+    public Expresion ObtenerSi(String clave, TipoRelacional operador, String valor){
+        String salida = "[\n";
+        int indiceClave = indiceClave(clave);
+        if(indiceClave == -1){
+            salidaConsola.append("No se encontró la clave "+clave+" en el archivo.\n");
+            return null;
+        }
+        
+         for(int i=0; i<this.listaRegistros.size();i++){
+            aux = this.listaRegistros.get(i);
+            regi = aux.getLista();
+            auxItem = regi.get(indiceClave);
+            if(String.valueOf(auxItem.valor).equals(valor)){
+                salida +="\t{"; 
+                for(int j=0;j<regi.size();j++){
+                     salida+=String.valueOf(regi.get(j).valor)+", ";
+                }
+                salida+="\n";
+            }            
+        }        
+        return new Literal(EnumTipoDato.CADENA,salida+"]");
+    }
+    
+    public  LinkedList<Registro> getListaRegistros(){
         return this.listaRegistros;
     }
     public LinkedList<ItemRegistro> getListaClaves(){
