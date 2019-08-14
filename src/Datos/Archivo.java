@@ -70,6 +70,18 @@ public class Archivo {
     public LinkedList<ItemRegistro> getListaClaves(){
         return this.listaClaves;
     }
+    @Override
+    public String toString(){
+        String salida = "Claves = [";
+        for (int i = 0; i < this.listaClaves.size(); i++) {
+            salida = salida + "\""+this.listaClaves.get(i).valor.toString()+"\",";
+        }
+        salida+="]";
+        salida+="\n";
+        salida+="Número de registros = "+this.listaRegistros.size();
+        salida+="\n";
+        return salida;
+    }
     public enum TipoItemRegistro{
         CADENA,
         NUMERO

@@ -91,6 +91,7 @@ terminal String imprimir, numerico, archivo, leerarchivo, graficar;
 
 //-------> NO TERMINALES
 non terminal LinkedList<Instruccion> INICIO, LISTAINSTRUCCION;
+non terminal LinkedList<Expresion> LISTAE;
 non terminal Instruccion IMPRIMIR, DECLARACION, INSTRUCCION, GRAFICAR;
 non terminal Expresion E;
 non terminal EnumTipoDato TIPO;
@@ -130,8 +131,18 @@ TIPO ::= numerico:a {: RESULT = EnumTipoDato.NUMERICO; :}
 
 GRAFICAR ::= graficar:a apar E:b coma E:c coma E:d coma E:r coma E:f cpar puntoComa {: RESULT = new Graficar(b, c, d, r, f, aright, aleft); :}
           ;
-IMPRIMIR ::= imprimir:a apar E:b cpar puntoComa {: RESULT = new Imprimir(b, aright, aleft); :}
+IMPRIMIR ::= imprimir:a apar LISTAE:b cpar puntoComa {: RESULT = new Imprimir(b, aright, aleft); :}
           ;
+
+LISTAE ::= LISTAE:l coma E:a{:
+            RESULT = l;
+            l.add(a);
+        :}
+        | E:a {:
+            RESULT = new LinkedList<>();
+            RESULT.add(a);
+        :}
+        ;
 
 E ::= leerarchivo:l apar E:ruta cpar {: RESULT = new FuncionLeerArchivo(ruta, lright, lleft); :}
       | contar:a apar E:b cpar {: RESULT = new Contar(b); :}
