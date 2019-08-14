@@ -68,19 +68,21 @@ public class Archivo {
         }
         return new Literal(Simbolo.EnumTipoDato.NUMERICO, salida);
     }
-    public Expresion ObtenerSi(String clave, TipoRelacional operador, String valor){
+    public Expresion ObtenerSi(String clave, TipoRelacional operador, Expresion valor){
         String salida = "[\n";
         int indiceClave = indiceClave(clave);
         if(indiceClave == -1){
             salidaConsola.append("No se encontró la clave "+clave+" en el archivo.\n");
             return null;
         }
-        
-         for(int i=0; i<this.listaRegistros.size();i++){
+        switch(operador){
+            case IGUALIGUAL:
+                 if(valor.tipo.CADENA==EnumTipoDato.CADENA){
+             for(int i=0; i<this.listaRegistros.size();i++){
             aux = this.listaRegistros.get(i);
             regi = aux.getLista();
             auxItem = regi.get(indiceClave);
-            if(String.valueOf(auxItem.valor).equals(valor)){
+            if(String.valueOf(auxItem.valor).equals(String.valueOf(valor.valor))){
                 salida +="\t{"; 
                 for(int j=0;j<regi.size();j++){
                      salida+=String.valueOf(regi.get(j).valor)+", ";
@@ -89,6 +91,108 @@ public class Archivo {
             }            
         }        
         return new Literal(EnumTipoDato.CADENA,salida+"]");
+        }else{
+            salidaConsola.append("\nError al obtener clave");
+        }
+                break;
+            case MAYOR:
+             if(valor.tipo.CADENA==EnumTipoDato.CADENA){
+             for(int i=0; i<this.listaRegistros.size();i++){
+            aux = this.listaRegistros.get(i);
+            regi = aux.getLista();
+            auxItem = regi.get(indiceClave);
+            if(Double.parseDouble(String.valueOf(auxItem.valor))>Double.parseDouble((String.valueOf(valor.valor)))){
+                salida +="\t{"; 
+                for(int j=0;j<regi.size();j++){
+                     salida+=String.valueOf(regi.get(j).valor)+", ";
+                }
+                salida+="\n";
+            }            
+        }        
+        return new Literal(EnumTipoDato.CADENA,salida+"]");
+        }else{
+            salidaConsola.append("\nError al obtener clave");
+        }
+                break;
+            case MAYORIGUAL:
+                 if(valor.tipo.CADENA==EnumTipoDato.CADENA){
+             for(int i=0; i<this.listaRegistros.size();i++){
+            aux = this.listaRegistros.get(i);
+            regi = aux.getLista();
+            auxItem = regi.get(indiceClave);
+            if(Double.parseDouble(String.valueOf(auxItem.valor))>=Double.parseDouble((String.valueOf(valor.valor)))){
+                salida +="\t{"; 
+                for(int j=0;j<regi.size();j++){
+                     salida+=String.valueOf(regi.get(j).valor)+", ";
+                }
+                salida+="\n";
+            }            
+        }        
+        return new Literal(EnumTipoDato.CADENA,salida+"]");
+        }else{
+            salidaConsola.append("\nError al obtener clave");
+        }
+                break;
+            case MENOR:
+                 if(valor.tipo.CADENA==EnumTipoDato.CADENA){
+             for(int i=0; i<this.listaRegistros.size();i++){
+            aux = this.listaRegistros.get(i);
+            regi = aux.getLista();
+            auxItem = regi.get(indiceClave);
+            if(Double.parseDouble(String.valueOf(auxItem.valor))<Double.parseDouble((String.valueOf(valor.valor)))){
+                salida +="\t{"; 
+                for(int j=0;j<regi.size();j++){
+                     salida+=String.valueOf(regi.get(j).valor)+", ";
+                }
+                salida+="\n";
+            }            
+        }        
+        return new Literal(EnumTipoDato.CADENA,salida+"]");
+        }else{
+            salidaConsola.append("\nError al obtener clave");
+        }
+                break;
+            case MENORIGUAL:
+                 if(valor.tipo.CADENA==EnumTipoDato.CADENA){
+             for(int i=0; i<this.listaRegistros.size();i++){
+            aux = this.listaRegistros.get(i);
+            regi = aux.getLista();
+            auxItem = regi.get(indiceClave);
+            if(Double.parseDouble(String.valueOf(auxItem.valor))<=Double.parseDouble((String.valueOf(valor.valor)))){
+                salida +="\t{"; 
+                for(int j=0;j<regi.size();j++){
+                     salida+=String.valueOf(regi.get(j).valor)+", ";
+                }
+                salida+="\n";
+            }            
+        }        
+        return new Literal(EnumTipoDato.CADENA,salida+"]");
+        }else{
+            salidaConsola.append("\nError al obtener clave");
+        }
+                break;
+            case DIFERENTEQUE:
+                if(valor.tipo.CADENA==EnumTipoDato.CADENA){
+             for(int i=0; i<this.listaRegistros.size();i++){
+            aux = this.listaRegistros.get(i);
+            regi = aux.getLista();
+            auxItem = regi.get(indiceClave);
+            if(!String.valueOf(auxItem.valor).equals(String.valueOf(valor.valor))){
+                salida +="\t{"; 
+                for(int j=0;j<regi.size();j++){
+                     salida+=String.valueOf(regi.get(j).valor)+", ";
+                }
+                salida+="\n";
+            }            
+        }        
+        return new Literal(EnumTipoDato.CADENA,salida+"]");
+        }else{
+            salidaConsola.append("\nError al obtener clave");
+        }
+                break;
+        }
+       
+        return null;
     }
     
     public  LinkedList<Registro> getListaRegistros(){

@@ -34,7 +34,7 @@ public class ObtenerSi extends Expresion {
         Expresion val = this.valor.obtenerValor(ent);
         Archivo ar = (Archivo)resultado.valor;
         
-        Expresion variable = ar.ObtenerSi(String.valueOf(id.valor), operador, String.valueOf(val.valor));
+        Expresion variable = ar.ObtenerSi(String.valueOf(id.valor), operador, val);
         return new Literal(Simbolo.EnumTipoDato.CADENA,String.valueOf(variable.valor));
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
