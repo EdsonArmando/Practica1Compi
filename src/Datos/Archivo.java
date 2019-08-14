@@ -6,6 +6,7 @@
 package Datos;
 
 import Entorno.Simbolo;
+import Entorno.Simbolo.EnumTipoDato;
 import Expresion.Expresion;
 import Expresion.Literal;
 import java.util.LinkedList;
@@ -82,8 +83,66 @@ public class Archivo {
         salida+="\n";
         return salida;
     }
+    public Expresion contarSi(String idClave, TipoRelacional operadorRelacional, Expresion valor){
+        double salida = 0;
+        int indiceClave = indiceClave(idClave);
+        if(indiceClave == -1){
+            salidaConsola.append("No se encontró la clave "+idClave+" en el archivo.\n");
+            return null;
+        }
+        
+        for (int i = 0; i < this.listaRegistros.size(); i++) {
+            Registro r = this.listaRegistros.get(i);
+            if(indiceClave < r.elementos.size()){
+                ItemRegistro ir = r.elementos.get(indiceClave);
+                    if(comparacionRelacionalyDeTipos(ir, operadorRelacional, valor) != null){
+                        salida = salida + 1;    
+                    }
+            }else{
+                salidaConsola.append("El indice de la clave excede los registros por fila.\n");
+            }
+        }
+        return new Literal(Simbolo.EnumTipoDato.NUMERICO, salida);
+    }
+       public String comparacionRelacionalyDeTipos(ItemRegistro ir, TipoRelacional operadorRelacional, Expresion valorExp){
+        String salida = null;
+        /*** COMPROBACION DE TIPOS ***/
+        if(ir.tipo == TipoItemRegistro.NUMERO && valorExp.tipo == EnumTipoDato.NUMERICO){
+            /*** COMPARACION RELACIONAL **/
+            switch (operadorRelacional) {
+                case IGUALIGUAL:
+                    if(Double.parseDouble(ir.valor.toString()) == Double.parseDouble(valorExp.valor.toString()))
+                        return ir.valor.toString();
+                    else
+                        return null;
+                default:
+                    return null;
+            }
+        }
+        else if(ir.tipo == TipoItemRegistro.CADENA && valorExp.tipo == EnumTipoDato.CADENA){
+            /*** COMPARACION RELACIONAL **/
+            switch (operadorRelacional) {
+                case IGUALIGUAL:
+                    if(ir.valor.toString().equals(valorExp.valor.toString()))
+                        return ir.valor.toString();
+                    else
+                        return null;
+                default:
+                    return null;
+            }
+        }
+        return salida;
+    } 
     public enum TipoItemRegistro{
         CADENA,
         NUMERO
+    }
+    public enum TipoRelacional{
+        IGUALIGUAL,
+        MAYOR,
+        MENOR,
+        MAYORIGUAL,
+        MENORIGUAL,
+        DIFERENTEQUE
     }
 }

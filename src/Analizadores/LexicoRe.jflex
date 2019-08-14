@@ -97,6 +97,25 @@ id = {letra}+({letra}|{digito}|"_")*
 
 <YYINITIAL> "="         {   System.out.println("Reconocido: <<"+yytext()+">>, igual");
                             return new Symbol(Simbolos.igual, yycolumn, yyline, yytext());}
+
+<YYINITIAL> "=="         {   System.out.println("Reconocido: <<"+yytext()+">>, igualigual");
+                            return new Symbol(Simbolos.igualigual, yycolumn, yyline, yytext());}
+
+<YYINITIAL> ">"         {   System.out.println("Reconocido: <<"+yytext()+">>, mayor");
+                            return new Symbol(Simbolos.mayor, yycolumn, yyline, yytext());}
+
+<YYINITIAL> "<"         {   System.out.println("Reconocido: <<"+yytext()+">>, menor");
+                            return new Symbol(Simbolos.menor, yycolumn, yyline, yytext());}
+
+<YYINITIAL> ">="         {   System.out.println("Reconocido: <<"+yytext()+">>, mayorigual");
+                            return new Symbol(Simbolos.mayorigual, yycolumn, yyline, yytext());}
+
+<YYINITIAL> "<="         {   System.out.println("Reconocido: <<"+yytext()+">>, menorigual");
+                            return new Symbol(Simbolos.menorigual, yycolumn, yyline, yytext());}
+
+<YYINITIAL> "!="         {   System.out.println("Reconocido: <<"+yytext()+">>, diferenteque");
+                            return new Symbol(Simbolos.diferenteque, yycolumn, yyline, yytext());}
+
 <YYINITIAL> "sumar"     {   System.out.println("Reconocido: <<"+yytext()+">>, tokenSumar");
                             return new Symbol(Simbolos.sumar, yycolumn, yyline, yytext());}
 
@@ -116,6 +135,9 @@ id = {letra}+({letra}|{digito}|"_")*
 
 <YYINITIAL> "graficar"       {   System.out.println("Reconocido: <<"+yytext()+">>, tokenGraficar");
                                 return new Symbol(Simbolos.graficar, yycolumn, yyline, yytext());}
+
+<YYINITIAL> "contarsi"       {   System.out.println("Reconocido: <<"+yytext()+">>, tokenContarSi");
+                                return new Symbol(Simbolos.contarSi, yycolumn, yyline, yytext());}
 
 <YYINITIAL> "contar"       {   System.out.println("Reconocido: <<"+yytext()+">>, tokenContar");
                                 return new Symbol(Simbolos.contar, yycolumn, yyline, yytext());}

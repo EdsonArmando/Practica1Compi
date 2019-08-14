@@ -84,9 +84,9 @@ action code
 ----------------------------------------------------------------------------*/
 
 //-------> TERMINALES
-terminal apar, cpar, coma, puntoComa, igual;
+terminal apar, cpar, coma, puntoComa, igual, igualigual, mayor, menor, mayorigual, menorigual, diferenteque;
 terminal mas, menos, por, dividir;
-terminal String id, numero, cadena, claves, registros, contar, sumar;
+terminal String id, numero, cadena, claves, registros, contar, sumar, contarSi;
 terminal String imprimir, numerico, archivo, leerarchivo, graficar;
 
 //-------> NO TERMINALES
@@ -95,6 +95,7 @@ non terminal LinkedList<Expresion> LISTAE;
 non terminal Instruccion IMPRIMIR, DECLARACION, INSTRUCCION, GRAFICAR;
 non terminal Expresion E;
 non terminal EnumTipoDato TIPO;
+non terminal TipoRelacional RELA;
 
 start with INICIO;
 
@@ -146,17 +147,17 @@ LISTAE ::= LISTAE:l coma E:a{:
 
 E ::= leerarchivo:l apar E:ruta cpar {: RESULT = new FuncionLeerArchivo(ruta, lright, lleft); :}
       | contar:a apar E:b cpar {: RESULT = new Contar(b); :}
+      | contarSi:a apar E:b coma E:c coma RELA:d coma E:val cpar {: RESULT = new ContarSi(b, c, d, val, aright, aleft); :}
       | sumar:a apar E:b coma E:c cpar {: RESULT = new Sumar(b, c, aright, aleft); :}
       | numero:a {: RESULT = new Literal(EnumTipoDato.NUMERICO, a); :}
       | cadena:a {: RESULT = new Literal(EnumTipoDato.CADENA, a); :}
       | id:a {: RESULT = new Id(a, aright, aleft); :}
       ;
 
-/*** 
-      Instruccion
-          |
-        Sumar 
-      /      \
-  ClaseId   ClaseLiteral
-
-***/
+RELA ::= igualigual {: RESULT = TipoRelacional.IGUALIGUAL; :}
+         | mayor {: RESULT = TipoRelacional.MAYOR; :}
+         | menor {: RESULT = TipoRelacional.MENOR; :}
+         | mayorigual {: RESULT = TipoRelacional.MAYORIGUAL; :}
+         | menorigual {: RESULT = TipoRelacional.MENORIGUAL; :}
+         | diferenteque {: RESULT = TipoRelacional.DIFERENTEQUE; :}
+       ;

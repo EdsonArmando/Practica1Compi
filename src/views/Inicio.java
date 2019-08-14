@@ -34,7 +34,7 @@ public class Inicio extends javax.swing.JFrame {
         setLayout(null);
     }
     private int cont=0;
-    JTextArea tex1;
+    java.awt.TextArea tex1;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -126,7 +126,7 @@ public class Inicio extends javax.swing.JFrame {
     
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         Component comp = jTabbedPane1.getComponentAt(jTabbedPane1.getSelectedIndex());
-        tex1=(JTextArea) comp;
+        tex1=(java.awt.TextArea) comp;
         String datos = tex1.getText();
         analizarEntrada(datos);
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -176,7 +176,7 @@ public class Inicio extends javax.swing.JFrame {
             System.out.println("You chose to open this file: " +
                     chooser.getSelectedFile().getName());
         }
-        tex1 = new JTextArea();
+        tex1 = new java.awt.TextArea();
         jTabbedPane1.addTab("Archivo"+(cont+1), tex1);
         cont++;
     }//GEN-LAST:event_idAbrirMouseClicked

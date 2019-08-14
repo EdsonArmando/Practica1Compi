@@ -44,6 +44,9 @@ public class Graficar extends Instruccion{
     Expresion identificador;
     Expresion valoresX;
     Expresion valoresY;
+    Registro aux=null;
+    ItemRegistro auxItem=null;
+    LinkedList<ItemRegistro> regi;
     public Graficar(Expresion nombre, Expresion titulo, Expresion identificador, Expresion valoresX, Expresion valoresY,int fila, int columna){
         this.nombre = nombre;
         this.titulo = titulo;
@@ -57,9 +60,6 @@ public class Graficar extends Instruccion{
 
     @Override
     public void ejecutar(Entorno ent) {
-        Registro aux=null;
-        ItemRegistro auxItem=null;
-        LinkedList<ItemRegistro> regi;
         DefaultCategoryDataset categoria = new DefaultCategoryDataset();
         Expresion resultadoArchivo = this.identificador.obtenerValor(ent);
         Archivo arch = (Archivo)resultadoArchivo.valor;
