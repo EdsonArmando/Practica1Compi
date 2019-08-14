@@ -19,7 +19,7 @@ public class Archivo {
     int fila, columna;
     LinkedList<Registro> listaRegistros;
     LinkedList<ItemRegistro> listaClaves;
-    
+    public Archivo(){}
     public Archivo(LinkedList<ItemRegistro> listaClaves,LinkedList<Registro> listaRegistros, int fila, int columna){
         this.listaRegistros = listaRegistros;
         this.listaClaves = listaClaves;
