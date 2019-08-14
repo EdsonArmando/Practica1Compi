@@ -7,6 +7,7 @@ package Expresion;
 
 import Entorno.Entorno;
 import Entorno.Simbolo;
+import Entorno.Simbolo.EnumTipoDato;
 
 /**
  *

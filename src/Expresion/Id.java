@@ -37,5 +37,4 @@ public class Id extends Expresion{
     public Simbolo.EnumTipoDato getTipo() {
         return this.tipo;
     }
-    
 }

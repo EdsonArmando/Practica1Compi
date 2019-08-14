@@ -8,6 +8,7 @@ package views;
 import Analizadores.a_Lexico_rep;
 import Analizadores.analisis_sintacticos_re;
 import Entorno.Entorno;
+import Instruccion.Declaracion;
 import Instruccion.Instruccion;
 import java.awt.Component;
 import java.io.BufferedReader;
@@ -134,6 +135,7 @@ public class Inicio extends javax.swing.JFrame {
         salidaConsola.setText("");
         a_Lexico_rep lexico = new a_Lexico_rep(new BufferedReader(new StringReader(entrada)));
         lexico.salidaConsola = salidaConsola;
+        
         analisis_sintacticos_re sintactico = new analisis_sintacticos_re(lexico);
         sintactico.salidaConsola = salidaConsola;
         try{
@@ -145,6 +147,7 @@ public class Inicio extends javax.swing.JFrame {
     }
      public void recorrerArbol(analisis_sintacticos_re sintactico){
         Entorno ent = new Entorno(null);
+        Declaracion decl;
         LinkedList<Instruccion> listaInstrucciones = sintactico.resultado;
         for (Instruccion i : listaInstrucciones) {
             if(i!=null)

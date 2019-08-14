@@ -8,6 +8,7 @@ package Expresion;
 import Datos.Archivo;
 import Entorno.Entorno;
 import Entorno.Simbolo;
+import Entorno.Simbolo.EnumTipoDato;
 
 /**
  *
@@ -15,16 +16,26 @@ import Entorno.Simbolo;
  */
 public class Sumar extends Expresion{
     String id;
-    
+    String ident;
+    Expresion clave;
+    Expresion identificador;
+    public Sumar(Expresion identificador, Expresion clave,int fila, int columna) {
+        this.fila = fila;
+        this.columna = columna;
+        this.identificador = identificador;
+        this.clave = clave;
+        
+    }
     @Override
     public Expresion obtenerValor(Entorno ent) {
-        Simbolo s = ent.obtener(id);
-        if(s.getTipo() == Simbolo.EnumTipoDato.ARCHIVO){
-            Archivo arch = (Archivo)s.getValor();
-            arch.sumar();
-            
-        }
-        return new Literal(Simbolo.EnumTipoDato.ERROR, "%ERROR%");
+        Expresion resultadoArchivo = this.identificador.obtenerValor(ent);
+        Archivo arch = (Archivo)resultadoArchivo.valor;
+        
+        Expresion resultadoClave = this.clave.obtenerValor(ent);
+        String idClave = resultadoClave.valor.toString();
+        
+        Expresion suma = arch.sumar(idClave);
+        return new Literal(EnumTipoDato.NUMERICO, Double.parseDouble(suma.valor.toString()));
     }
 
     @Override

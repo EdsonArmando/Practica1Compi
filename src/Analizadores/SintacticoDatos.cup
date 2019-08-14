@@ -92,9 +92,9 @@ terminal String id, numero, cadena, claves, registros;
 non terminal Double E;
 non terminal Archivo INICIO;
 non terminal LinkedList<String> LISTAID, LISTADECLARACION;
-non terminal String DECLARACION, CLAVEREGISTRO, LISTACLAVES; 
+non terminal String DECLARACION, CLAVEREGISTRO; 
 non terminal LinkedList<Registro> LISTAREGISTROS;
-non terminal LinkedList<ItemRegistro> LISTAITEM;
+non terminal LinkedList<ItemRegistro> LISTAITEM, LISTACLAVES;
 non terminal Archivo ARCHIVO;
 non terminal ItemRegistro ITEM;
 
@@ -108,13 +108,19 @@ INICIO::=  ARCHIVO:ls{:
             parser.resultado = ls;
         :}
         ;
-ARCHIVO::= claves:a igual acorch LISTACLAVES ccorch registros igual acorch LISTAREGISTROS:d ccorch{:
-                RESULT = new Archivo(d, aright, aleft);        
+ARCHIVO::= claves igual acorch LISTACLAVES:a ccorch registros igual acorch LISTAREGISTROS:d ccorch{:
+                RESULT = new Archivo(a, d, aright, aleft);        
             :}
             ;
 
-LISTACLAVES ::= LISTACLAVES coma ITEM
-            | ITEM
+LISTACLAVES ::= LISTACLAVES:a coma ITEM:b {: 
+                RESULT = a;
+                RESULT.add(b);
+            :}
+            | ITEM:a {: 
+                RESULT = new LinkedList<>();
+                RESULT.add(a);
+            :}
             ;
 
 LISTAREGISTROS ::= LISTAREGISTROS:a allave LISTAITEM:b cllave {: 

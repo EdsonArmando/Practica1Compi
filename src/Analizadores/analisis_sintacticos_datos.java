@@ -35,8 +35,8 @@ public class analisis_sintacticos_datos extends java_cup.runtime.lr_parser {
   protected static final short _production_table[][] = 
     unpackFromStrings(new String[] {
     "\000\013\000\002\002\004\000\002\003\003\000\002\013" +
-    "\014\000\002\010\005\000\002\010\003\000\002\011\006" +
-    "\000\002\011\005\000\002\012\005\000\002\012\003\000" +
+    "\014\000\002\012\005\000\002\012\003\000\002\010\006" +
+    "\000\002\010\005\000\002\011\005\000\002\011\003\000" +
     "\002\014\003\000\002\014\003" });
 
   /** Access to production table. */
@@ -71,13 +71,13 @@ public class analisis_sintacticos_datos extends java_cup.runtime.lr_parser {
     unpackFromStrings(new String[] {
     "\000\034\000\006\003\005\013\003\001\001\000\002\001" +
     "\001\000\002\001\001\000\002\001\001\000\002\001\001" +
-    "\000\002\001\001\000\006\010\014\014\011\001\001\000" +
+    "\000\002\001\001\000\006\012\014\014\011\001\001\000" +
     "\002\001\001\000\002\001\001\000\002\001\001\000\002" +
     "\001\001\000\004\014\035\001\001\000\002\001\001\000" +
-    "\002\001\001\000\002\001\001\000\004\011\022\001\001" +
-    "\000\002\001\001\000\006\012\024\014\025\001\001\000" +
+    "\002\001\001\000\002\001\001\000\004\010\022\001\001" +
+    "\000\002\001\001\000\006\011\024\014\025\001\001\000" +
     "\002\001\001\000\002\001\001\000\002\001\001\000\004" +
-    "\014\030\001\001\000\002\001\001\000\006\012\033\014" +
+    "\014\030\001\001\000\002\001\001\000\006\011\033\014" +
     "\025\001\001\000\002\001\001\000\002\001\001\000\002" +
     "\001\001\000\002\001\001" });
 
@@ -234,14 +234,14 @@ int exponente(int exp){
           case 2: // ARCHIVO ::= claves igual acorch LISTACLAVES ccorch registros igual acorch LISTAREGISTROS ccorch 
             {
               Archivo RESULT =null;
-		int aleft = ((java_cup.runtime.Symbol)CUP$analisis_sintacticos_datos$stack.elementAt(CUP$analisis_sintacticos_datos$top-9)).left;
-		int aright = ((java_cup.runtime.Symbol)CUP$analisis_sintacticos_datos$stack.elementAt(CUP$analisis_sintacticos_datos$top-9)).right;
-		String a = (String)((java_cup.runtime.Symbol) CUP$analisis_sintacticos_datos$stack.elementAt(CUP$analisis_sintacticos_datos$top-9)).value;
+		int aleft = ((java_cup.runtime.Symbol)CUP$analisis_sintacticos_datos$stack.elementAt(CUP$analisis_sintacticos_datos$top-6)).left;
+		int aright = ((java_cup.runtime.Symbol)CUP$analisis_sintacticos_datos$stack.elementAt(CUP$analisis_sintacticos_datos$top-6)).right;
+		LinkedList<ItemRegistro> a = (LinkedList<ItemRegistro>)((java_cup.runtime.Symbol) CUP$analisis_sintacticos_datos$stack.elementAt(CUP$analisis_sintacticos_datos$top-6)).value;
 		int dleft = ((java_cup.runtime.Symbol)CUP$analisis_sintacticos_datos$stack.elementAt(CUP$analisis_sintacticos_datos$top-1)).left;
 		int dright = ((java_cup.runtime.Symbol)CUP$analisis_sintacticos_datos$stack.elementAt(CUP$analisis_sintacticos_datos$top-1)).right;
 		LinkedList<Registro> d = (LinkedList<Registro>)((java_cup.runtime.Symbol) CUP$analisis_sintacticos_datos$stack.elementAt(CUP$analisis_sintacticos_datos$top-1)).value;
 		
-                RESULT = new Archivo(d, aright, aleft);        
+                RESULT = new Archivo(a, d, aright, aleft);        
             
               CUP$analisis_sintacticos_datos$result = parser.getSymbolFactory().newSymbol("ARCHIVO",9, ((java_cup.runtime.Symbol)CUP$analisis_sintacticos_datos$stack.elementAt(CUP$analisis_sintacticos_datos$top-9)), ((java_cup.runtime.Symbol)CUP$analisis_sintacticos_datos$stack.peek()), RESULT);
             }
@@ -250,18 +250,33 @@ int exponente(int exp){
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 3: // LISTACLAVES ::= LISTACLAVES coma ITEM 
             {
-              String RESULT =null;
-
-              CUP$analisis_sintacticos_datos$result = parser.getSymbolFactory().newSymbol("LISTACLAVES",6, ((java_cup.runtime.Symbol)CUP$analisis_sintacticos_datos$stack.elementAt(CUP$analisis_sintacticos_datos$top-2)), ((java_cup.runtime.Symbol)CUP$analisis_sintacticos_datos$stack.peek()), RESULT);
+              LinkedList<ItemRegistro> RESULT =null;
+		int aleft = ((java_cup.runtime.Symbol)CUP$analisis_sintacticos_datos$stack.elementAt(CUP$analisis_sintacticos_datos$top-2)).left;
+		int aright = ((java_cup.runtime.Symbol)CUP$analisis_sintacticos_datos$stack.elementAt(CUP$analisis_sintacticos_datos$top-2)).right;
+		LinkedList<ItemRegistro> a = (LinkedList<ItemRegistro>)((java_cup.runtime.Symbol) CUP$analisis_sintacticos_datos$stack.elementAt(CUP$analisis_sintacticos_datos$top-2)).value;
+		int bleft = ((java_cup.runtime.Symbol)CUP$analisis_sintacticos_datos$stack.peek()).left;
+		int bright = ((java_cup.runtime.Symbol)CUP$analisis_sintacticos_datos$stack.peek()).right;
+		ItemRegistro b = (ItemRegistro)((java_cup.runtime.Symbol) CUP$analisis_sintacticos_datos$stack.peek()).value;
+		 
+                RESULT = a;
+                RESULT.add(b);
+            
+              CUP$analisis_sintacticos_datos$result = parser.getSymbolFactory().newSymbol("LISTACLAVES",8, ((java_cup.runtime.Symbol)CUP$analisis_sintacticos_datos$stack.elementAt(CUP$analisis_sintacticos_datos$top-2)), ((java_cup.runtime.Symbol)CUP$analisis_sintacticos_datos$stack.peek()), RESULT);
             }
           return CUP$analisis_sintacticos_datos$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 4: // LISTACLAVES ::= ITEM 
             {
-              String RESULT =null;
-
-              CUP$analisis_sintacticos_datos$result = parser.getSymbolFactory().newSymbol("LISTACLAVES",6, ((java_cup.runtime.Symbol)CUP$analisis_sintacticos_datos$stack.peek()), ((java_cup.runtime.Symbol)CUP$analisis_sintacticos_datos$stack.peek()), RESULT);
+              LinkedList<ItemRegistro> RESULT =null;
+		int aleft = ((java_cup.runtime.Symbol)CUP$analisis_sintacticos_datos$stack.peek()).left;
+		int aright = ((java_cup.runtime.Symbol)CUP$analisis_sintacticos_datos$stack.peek()).right;
+		ItemRegistro a = (ItemRegistro)((java_cup.runtime.Symbol) CUP$analisis_sintacticos_datos$stack.peek()).value;
+		 
+                RESULT = new LinkedList<>();
+                RESULT.add(a);
+            
+              CUP$analisis_sintacticos_datos$result = parser.getSymbolFactory().newSymbol("LISTACLAVES",8, ((java_cup.runtime.Symbol)CUP$analisis_sintacticos_datos$stack.peek()), ((java_cup.runtime.Symbol)CUP$analisis_sintacticos_datos$stack.peek()), RESULT);
             }
           return CUP$analisis_sintacticos_datos$result;
 
@@ -279,7 +294,7 @@ int exponente(int exp){
                     RESULT = a;
                     RESULT.add(new Registro(b, false, aright, aleft));
                  
-              CUP$analisis_sintacticos_datos$result = parser.getSymbolFactory().newSymbol("LISTAREGISTROS",7, ((java_cup.runtime.Symbol)CUP$analisis_sintacticos_datos$stack.elementAt(CUP$analisis_sintacticos_datos$top-3)), ((java_cup.runtime.Symbol)CUP$analisis_sintacticos_datos$stack.peek()), RESULT);
+              CUP$analisis_sintacticos_datos$result = parser.getSymbolFactory().newSymbol("LISTAREGISTROS",6, ((java_cup.runtime.Symbol)CUP$analisis_sintacticos_datos$stack.elementAt(CUP$analisis_sintacticos_datos$top-3)), ((java_cup.runtime.Symbol)CUP$analisis_sintacticos_datos$stack.peek()), RESULT);
             }
           return CUP$analisis_sintacticos_datos$result;
 
@@ -294,7 +309,7 @@ int exponente(int exp){
                     RESULT = new LinkedList<>();
                     RESULT.add(new Registro(a, true, aright, aleft)); 
                 
-              CUP$analisis_sintacticos_datos$result = parser.getSymbolFactory().newSymbol("LISTAREGISTROS",7, ((java_cup.runtime.Symbol)CUP$analisis_sintacticos_datos$stack.elementAt(CUP$analisis_sintacticos_datos$top-2)), ((java_cup.runtime.Symbol)CUP$analisis_sintacticos_datos$stack.peek()), RESULT);
+              CUP$analisis_sintacticos_datos$result = parser.getSymbolFactory().newSymbol("LISTAREGISTROS",6, ((java_cup.runtime.Symbol)CUP$analisis_sintacticos_datos$stack.elementAt(CUP$analisis_sintacticos_datos$top-2)), ((java_cup.runtime.Symbol)CUP$analisis_sintacticos_datos$stack.peek()), RESULT);
             }
           return CUP$analisis_sintacticos_datos$result;
 
@@ -312,7 +327,7 @@ int exponente(int exp){
                 RESULT = a;
                 RESULT.add(b);
            
-              CUP$analisis_sintacticos_datos$result = parser.getSymbolFactory().newSymbol("LISTAITEM",8, ((java_cup.runtime.Symbol)CUP$analisis_sintacticos_datos$stack.elementAt(CUP$analisis_sintacticos_datos$top-2)), ((java_cup.runtime.Symbol)CUP$analisis_sintacticos_datos$stack.peek()), RESULT);
+              CUP$analisis_sintacticos_datos$result = parser.getSymbolFactory().newSymbol("LISTAITEM",7, ((java_cup.runtime.Symbol)CUP$analisis_sintacticos_datos$stack.elementAt(CUP$analisis_sintacticos_datos$top-2)), ((java_cup.runtime.Symbol)CUP$analisis_sintacticos_datos$stack.peek()), RESULT);
             }
           return CUP$analisis_sintacticos_datos$result;
 
@@ -327,7 +342,7 @@ int exponente(int exp){
                 RESULT = new LinkedList<>();
                 RESULT.add(a);
             
-              CUP$analisis_sintacticos_datos$result = parser.getSymbolFactory().newSymbol("LISTAITEM",8, ((java_cup.runtime.Symbol)CUP$analisis_sintacticos_datos$stack.peek()), ((java_cup.runtime.Symbol)CUP$analisis_sintacticos_datos$stack.peek()), RESULT);
+              CUP$analisis_sintacticos_datos$result = parser.getSymbolFactory().newSymbol("LISTAITEM",7, ((java_cup.runtime.Symbol)CUP$analisis_sintacticos_datos$stack.peek()), ((java_cup.runtime.Symbol)CUP$analisis_sintacticos_datos$stack.peek()), RESULT);
             }
           return CUP$analisis_sintacticos_datos$result;
 

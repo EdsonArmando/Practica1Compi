@@ -97,7 +97,8 @@ id = {letra}+({letra}|{digito}|"_")*
 
 <YYINITIAL> "="         {   System.out.println("Reconocido: <<"+yytext()+">>, igual");
                             return new Symbol(Simbolos.igual, yycolumn, yyline, yytext());}
-
+<YYINITIAL> "sumar"     {   System.out.println("Reconocido: <<"+yytext()+">>, tokenSumar");
+                            return new Symbol(Simbolos.sumar, yycolumn, yyline, yytext());}
 
 //-------> Reservadas, tipos de datos y del sistema
 
@@ -112,6 +113,9 @@ id = {letra}+({letra}|{digito}|"_")*
 
 <YYINITIAL> "leerarchivo"       {   System.out.println("Reconocido: <<"+yytext()+">>, tokenLeerArchivo");
                                 return new Symbol(Simbolos.leerarchivo, yycolumn, yyline, yytext());}
+
+<YYINITIAL> "graficar"       {   System.out.println("Reconocido: <<"+yytext()+">>, tokenGraficar");
+                                return new Symbol(Simbolos.graficar, yycolumn, yyline, yytext());}
 
 <YYINITIAL> "contar"       {   System.out.println("Reconocido: <<"+yytext()+">>, tokenContar");
                                 return new Symbol(Simbolos.contar, yycolumn, yyline, yytext());}

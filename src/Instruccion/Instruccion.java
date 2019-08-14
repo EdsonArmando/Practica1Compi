@@ -20,7 +20,8 @@ public abstract class Instruccion {
     public enum EnumTipoIns{
        DECLARACION,
        IMPRIMIR,
-       LEERARCHIVO
+       LEERARCHIVO,
+       GRAFICAR
     }            
 }
 

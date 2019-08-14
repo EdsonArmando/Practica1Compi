@@ -86,12 +86,12 @@ action code
 //-------> TERMINALES
 terminal apar, cpar, coma, puntoComa, igual;
 terminal mas, menos, por, dividir;
-terminal String id, numero, cadena, claves, registros, contar;
-terminal String imprimir, numerico, archivo, leerarchivo;
+terminal String id, numero, cadena, claves, registros, contar, sumar;
+terminal String imprimir, numerico, archivo, leerarchivo, graficar;
 
 //-------> NO TERMINALES
 non terminal LinkedList<Instruccion> INICIO, LISTAINSTRUCCION;
-non terminal Instruccion IMPRIMIR, DECLARACION, INSTRUCCION;
+non terminal Instruccion IMPRIMIR, DECLARACION, INSTRUCCION, GRAFICAR;
 non terminal Expresion E;
 non terminal EnumTipoDato TIPO;
 
@@ -117,6 +117,7 @@ LISTAINSTRUCCION ::= LISTAINSTRUCCION:a INSTRUCCION:b{:
 
 INSTRUCCION ::= DECLARACION:a {: RESULT = a; :}
             | IMPRIMIR:a {: RESULT = a; :}
+            | GRAFICAR:a {: RESULT = a; :}
             | error:a puntoComa{: RESULT = new InstruccionConError("Existe una instrucción con error, No se reconoció correctamente", aright, aleft); :}    
             ;
 
@@ -127,11 +128,14 @@ TIPO ::= numerico:a {: RESULT = EnumTipoDato.NUMERICO; :}
       | archivo:a {: RESULT = EnumTipoDato.ARCHIVO; :}
       ;
 
+GRAFICAR ::= graficar:a apar E:b coma E:c coma E:d coma E:r coma E:f cpar puntoComa {: RESULT = new Graficar(b, c, d, r, f, aright, aleft); :}
+          ;
 IMPRIMIR ::= imprimir:a apar E:b cpar puntoComa {: RESULT = new Imprimir(b, aright, aleft); :}
           ;
 
 E ::= leerarchivo:l apar E:ruta cpar {: RESULT = new FuncionLeerArchivo(ruta, lright, lleft); :}
       | contar:a apar E:b cpar {: RESULT = new Contar(b); :}
+      | sumar:a apar E:b coma E:c cpar {: RESULT = new Sumar(b, c, aright, aleft); :}
       | numero:a {: RESULT = new Literal(EnumTipoDato.NUMERICO, a); :}
       | cadena:a {: RESULT = new Literal(EnumTipoDato.CADENA, a); :}
       | id:a {: RESULT = new Id(a, aright, aleft); :}

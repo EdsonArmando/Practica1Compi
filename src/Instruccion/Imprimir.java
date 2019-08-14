@@ -9,6 +9,7 @@ package Instruccion;
 import Entorno.Entorno;
 import Entorno.Simbolo;
 import Expresion.Expresion;
+import Expresion.Id;
 import static views.Inicio.salidaConsola;
 
 /**
@@ -17,7 +18,7 @@ import static views.Inicio.salidaConsola;
  */
 public class Imprimir extends Instruccion{
     Expresion expresion;
-    
+    Id id;
     public Imprimir(Expresion expresion, int fila, int columna) {
         this.expresion = expresion;
         this.fila = fila;
@@ -32,8 +33,9 @@ public class Imprimir extends Instruccion{
             System.out.println("La expresion es un error :(");
             return;
         }
-        System.out.println(String.valueOf(resultado.valor));
-        salidaConsola.append(String.valueOf(resultado.valor));
+
+        salidaConsola.append(String.valueOf(resultado.valor)+"\n");
+        salidaConsola.append(String.valueOf(resultado.tipo));
     }
 
     @Override

@@ -21,4 +21,7 @@ public class Registro {
          this.fila = fila;
          this.columna = columna;
      }
+    public LinkedList getLista(){
+        return this.elementos;
+    }
 }

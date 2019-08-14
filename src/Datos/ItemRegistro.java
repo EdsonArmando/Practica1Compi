@@ -11,8 +11,8 @@ package Datos;
  */
 public class ItemRegistro {
      int fila, columna;
-    Object valor;
-    Archivo.TipoItemRegistro tipo;
+    public Object valor;
+    public Archivo.TipoItemRegistro tipo;
     
     public ItemRegistro(Archivo.TipoItemRegistro tipo, Object valor, int fila, int columna){
         this.tipo = tipo;
