@@ -149,6 +149,9 @@ id = {letra}+({letra}|{digito}|"_")*
 <YYINITIAL> "contar"       {   System.out.println("Reconocido: <<"+yytext()+">>, tokenContar");
                                 return new Symbol(Simbolos.contar, yycolumn, yyline, yytext());}
 
+<YYINITIAL> "promedio"       {   System.out.println("Reconocido: <<"+yytext()+">>, tokenPromedio");
+                                return new Symbol(Simbolos.promedio, yycolumn, yyline, yytext());}
+
 "\"" {yybegin(STRNG);}
 
 <YYINITIAL> {numero}                  {   System.out.println("Reconocido: <<"+yytext()+">>, numero ");

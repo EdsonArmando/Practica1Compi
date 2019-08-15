@@ -84,7 +84,7 @@ action code
 ----------------------------------------------------------------------------*/
 
 //-------> TERMINALES
-terminal apar, cpar, coma, puntoComa, igual, igualigual, mayor, menor, mayorigual, menorigual, diferenteque;
+terminal apar, cpar, coma, puntoComa, igual, igualigual, mayor, menor, mayorigual, menorigual, diferenteque, promedio;
 terminal mas, menos, por, dividir;
 terminal String id, numero, cadena, claves, registros, contar, sumar, contarSi, obtenerSi;
 terminal String imprimir,  numerico, archivo, leerarchivo, graficar;
@@ -153,6 +153,7 @@ E ::= leerarchivo:l apar E:ruta cpar {: RESULT = new FuncionLeerArchivo(ruta, lr
       | sumar:a apar E:b coma E:c cpar {: RESULT = new Sumar(b, c, aright, aleft); :}
       | numero:a {: RESULT = new Literal(EnumTipoDato.NUMERICO, a); :}
       | cadena:a {: RESULT = new Literal(EnumTipoDato.CADENA, a); :}
+      | promedio:a apar E:n coma E:s cpar {: RESULT = new Promedio(n,s, aright, aleft); :}
       | id:a {: RESULT = new Id(a, aright, aleft); :}
       ;
 

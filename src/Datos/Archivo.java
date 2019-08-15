@@ -245,6 +245,31 @@ public class Archivo {
                         return ir.valor.toString();
                     else
                         return null;
+                case DIFERENTEQUE:
+                     if(Double.parseDouble(ir.valor.toString()) != Double.parseDouble(valorExp.valor.toString()))
+                        return ir.valor.toString();
+                    else
+                        return null;
+                case MAYOR:
+                     if(Double.parseDouble(ir.valor.toString()) > Double.parseDouble(valorExp.valor.toString()))
+                        return ir.valor.toString();
+                    else
+                        return null;
+                case MENOR:
+                     if(Double.parseDouble(ir.valor.toString()) < Double.parseDouble(valorExp.valor.toString()))
+                        return ir.valor.toString();
+                    else
+                        return null;
+                case MAYORIGUAL:
+                     if(Double.parseDouble(ir.valor.toString()) >= Double.parseDouble(valorExp.valor.toString()))
+                        return ir.valor.toString();
+                    else
+                        return null;
+                case MENORIGUAL:
+                     if(Double.parseDouble(ir.valor.toString()) <= Double.parseDouble(valorExp.valor.toString()))
+                        return ir.valor.toString();
+                    else
+                        return null;
                 default:
                     return null;
             }
@@ -282,6 +307,25 @@ public class Archivo {
         }
         return salida;
     } 
+       
+     public Expresion Promedio(String Clave){
+         double suma=0.0;
+         int indice = indiceClave(Clave);
+         if(indice == -1){
+            salidaConsola.append("No se encontró la clave "+Clave+" en el archivo.\n");
+            return null;
+        }
+        for(int i=0;i<this.listaRegistros.size();i++){
+            Registro r = this.listaRegistros.get(i);
+            ItemRegistro item = r.elementos.get(indice);
+            if(item.tipo.NUMERO==TipoItemRegistro.NUMERO){
+                suma+=Double.parseDouble(item.valor.toString());
+            }else{
+                return null;
+            }
+        }
+         return new Literal(EnumTipoDato.NUMERICO, (suma)/this.listaRegistros.size());
+     }
     public enum TipoItemRegistro{
         CADENA,
         NUMERO
