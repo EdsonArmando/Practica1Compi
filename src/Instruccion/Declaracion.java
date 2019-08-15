@@ -40,7 +40,7 @@ public class Declaracion extends Instruccion{
         
         System.out.println("Ejecutando la instrucción Declaración --> TipoDato: " + 
                 this.tipoVariable.toString() + ", Nombre variable: " + this.nombreVariable + ", Valor: " + resultado.valor);
-        salidaConsola.append(this.nombreVariable);
+       
     }
 
     @Override

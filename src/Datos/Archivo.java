@@ -87,7 +87,7 @@ public class Archivo {
                 for(int j=0;j<regi.size();j++){
                      salida+=String.valueOf(regi.get(j).valor)+", ";
                 }
-                salida+="\n";
+                salida+="}\n";
             }            
         }        
         return new Literal(EnumTipoDato.CADENA,salida+"]");
@@ -257,6 +257,25 @@ public class Archivo {
                         return ir.valor.toString();
                     else
                         return null;
+                case MAYOR:
+                    
+                    break;
+                case MENOR:
+                    
+                    break;
+                case MAYORIGUAL:
+                    
+                    break;
+                case MENORIGUAL:
+                    
+                    break;
+                    
+                case DIFERENTEQUE:
+                     if(!ir.valor.toString().equals(valorExp.valor.toString()))
+                        return ir.valor.toString();
+                    else
+                        return null;
+                 
                 default:
                     return null;
             }

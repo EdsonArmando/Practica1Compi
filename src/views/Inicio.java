@@ -177,6 +177,8 @@ public class Inicio extends javax.swing.JFrame {
                     chooser.getSelectedFile().getName());
         }
         tex1 = new java.awt.TextArea();
+        tex1.isEditable();
+        tex1.isEnabled();
         jTabbedPane1.addTab("Archivo"+(cont+1), tex1);
         cont++;
     }//GEN-LAST:event_idAbrirMouseClicked
