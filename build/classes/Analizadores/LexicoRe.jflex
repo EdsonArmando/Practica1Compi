@@ -18,7 +18,7 @@ import java.awt.TextArea;
 %{
     String cadena="";
     public TextArea salidaConsola;
-    /*public static LinkedList<AcepErr> TablaErr=new LinkedList<AcepErr>();*/
+    public LinkedList<ErrorLexico> errLexico=new LinkedList<>();
 %}
 
 //-------> Directivas
@@ -167,8 +167,6 @@ id = {letra}+({letra}|{digito}|"_")*
 .                           {   String info = "Error Lexico: <<"+yytext()+">> ["+(yyline+1)+" , "+(yycolumn+1)+"]\n";
                                 salidaConsola.append(info);
                                 System.out.println(info);
-                                /*AcepErr datos =new AcepErr(yytext(),"ERROR LEXICO",(yyline+1),(yycolumn+1), "Simbolo no existe en el lenguaje");
-                                    TablaErr.add(datos);*/
-
+                                errLexico.add(new ErrorLexico(yytext(),yyline+1,yycolumn+1));
                             }
 

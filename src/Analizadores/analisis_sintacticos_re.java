@@ -7,9 +7,11 @@ package Analizadores;
 
 import Datos.Archivo.TipoRelacional;
 import java.awt.TextArea;
+import java.util.LinkedList;
 import java.util.*;
 import java_cup.runtime.Symbol;
 import Entorno.*;
+import Errores.ErrorSintactico;
 import Entorno.Simbolo.EnumTipoDato;
 import Expresion.*;
 import Instruccion.*;
@@ -217,6 +219,7 @@ public class analisis_sintacticos_re extends java_cup.runtime.lr_parser {
     /*public static LinkedList<AcepErr> TablaErr=new LinkedList<AcepErr>();*/
 
     public LinkedList<Instruccion> resultado = new LinkedList<>();
+    public  LinkedList<ErrorSintactico> errores = new LinkedList<>();
     public TextArea salidaConsola;
 
     //Metodo al que se llama automaticamente ante algun error sintactico
@@ -233,6 +236,8 @@ public class analisis_sintacticos_re extends java_cup.runtime.lr_parser {
                       "\n";
 
         salidaConsola.append(info);
+        errores.add(new ErrorSintactico(lexema,fila,columna));
+        System.out.println("ErrorSintactico");
         //lista_errores.add(new ErrorT(lexema, fila, columna,"sintactico" ,"Simbolo no esperado"));
         /*AcepErr datos =new AcepErr(lexema, "ERROR SINTACTICO" ,fila,columna,"Simbolo no esperado");
             TablaErr.add(datos);

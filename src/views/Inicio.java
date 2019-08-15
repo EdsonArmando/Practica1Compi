@@ -7,11 +7,14 @@ package views;
 
 import Analizadores.a_Lexico_rep;
 import Analizadores.analisis_sintacticos_re;
+import Errores.ErrorSintactico;
 import Entorno.Entorno;
+import Errores.ErrorLexico;
 import Instruccion.Declaracion;
 import Instruccion.Instruccion;
 import java.awt.Component;
 import java.io.BufferedReader;
+import java.io.PrintWriter;
 import java.io.StringReader;
 import java.util.LinkedList;
 import javax.swing.JFileChooser;
@@ -33,6 +36,8 @@ public class Inicio extends javax.swing.JFrame {
         initComponents();
         setLayout(null);
     }
+     LinkedList<ErrorSintactico> err;
+     LinkedList<ErrorLexico> errL;
     private int cont=0;
     java.awt.TextArea tex1;
 
@@ -135,9 +140,10 @@ public class Inicio extends javax.swing.JFrame {
         salidaConsola.setText("");
         a_Lexico_rep lexico = new a_Lexico_rep(new BufferedReader(new StringReader(entrada)));
         lexico.salidaConsola = salidaConsola;
-        
+        errL = lexico.errLexico;
         analisis_sintacticos_re sintactico = new analisis_sintacticos_re(lexico);
         sintactico.salidaConsola = salidaConsola;
+      
         try{
             sintactico.parse();
             recorrerArbol(sintactico);
@@ -153,6 +159,8 @@ public class Inicio extends javax.swing.JFrame {
             if(i!=null)
                 i.ejecutar(ent);
         }
+        err = sintactico.errores;
+        htmlSintactico();
     }
     private void idAbrirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idAbrirActionPerformed
         
@@ -182,7 +190,44 @@ public class Inicio extends javax.swing.JFrame {
         jTabbedPane1.addTab("Archivo"+(cont+1), tex1);
         cont++;
     }//GEN-LAST:event_idAbrirMouseClicked
-
+    public void htmlSintactico(){
+        int conts=1;
+        try{
+            PrintWriter archivo = new PrintWriter("reporte.html", "UTF-8");
+            archivo.println("<html>");
+            archivo.println("<head>");
+            archivo.println("<style>"
+                    + "table{"
+                    + "  font-family: arial, sans-serif; border-collapse: collapse;    width: 100%;}"
+                    + "td, th{"
+                    + "border: 1px solid #dddddd;text-align: left;  padding: 8px;}"
+                    + "tr:nth-child(even){"
+                    + " background-color: #dddddd;}"
+                    + "</style>");
+            archivo.println("</head>");
+            archivo.println("<body>");
+            archivo.println("<H1>Tabla de Errores</H1>");
+            archivo.println("<br><br>");
+            archivo.println("<table>");
+            archivo.println("<tr><th>No</th><th>Lexema</th><th>Tipo</th><th>Fila</th><th>Columna</th></tr>");
+            for(ErrorSintactico i : err)
+            {
+                archivo.println("<td>" + conts + "</td><td>" + i.lexema + "</td><td>" + "Sintactico" + "</td><td>" + i.fila + "</td><td>" + i.columna + "</td></tr>");
+                conts++;
+            }
+            for(ErrorLexico i : errL)
+            {
+                archivo.println("<td>" + conts + "</td><td>" + i.lexema + "</td><td>" + "Sintactico" + "</td><td>" + i.fila + "</td><td>" + i.columna + "</td></tr>");
+                conts++;
+            }
+            archivo.println("</table>");
+            archivo.println("</body>");
+            archivo.println("</html>");
+            archivo.close();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
     /**
      * @param args the command line arguments
      */

@@ -8,9 +8,11 @@
 
 package Analizadores;
 
+import Errores.ErrorLexico;
 import java_cup.runtime.*;
 import java.util.ArrayList;
 import java.awt.TextArea;
+import java.util.LinkedList;
 
 
 /**
@@ -376,7 +378,7 @@ public class a_Lexico_rep implements java_cup.runtime.Scanner {
   /* user code: */
     String cadena="";
     public TextArea salidaConsola;
-    /*public static LinkedList<AcepErr> TablaErr=new LinkedList<AcepErr>();*/
+    public LinkedList<ErrorLexico> errLexico=new LinkedList<>();
 
 
   /**
@@ -750,8 +752,7 @@ public class a_Lexico_rep implements java_cup.runtime.Scanner {
             { String info = "Error Lexico: <<"+yytext()+">> ["+(yyline+1)+" , "+(yycolumn+1)+"]\n";
                                 salidaConsola.append(info);
                                 System.out.println(info);
-                                /*AcepErr datos =new AcepErr(yytext(),"ERROR LEXICO",(yyline+1),(yycolumn+1), "Simbolo no existe en el lenguaje");
-                                    TablaErr.add(datos);*/
+                                errLexico.add(new ErrorLexico(yytext(),yyline+1,yycolumn+1));
             } 
             // fall through
           case 38: break;
