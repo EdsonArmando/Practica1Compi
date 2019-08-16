@@ -60,7 +60,8 @@ public class Archivo {
                 if(ir.tipo == TipoItemRegistro.NUMERO){
                     salida += Double.parseDouble(ir.valor.toString());
                 }else{
-                    salidaConsola.append("El registro en la filaregistro "+i+" y posicion registro "+indiceClave+" NO es numérico.\n");   
+                    return null;
+                    //salidaConsola.append("El registro en la filaregistro "+i+" y posicion registro "+indiceClave+" NO es numérico.\n");   
                 }
             }else{
                 salidaConsola.append("El indice de la clave excede los registros por fila.\n");
@@ -283,17 +284,17 @@ public class Archivo {
                     else
                         return null;
                 case MAYOR:
+                    return null;
                     
-                    break;
                 case MENOR:
                     
-                    break;
+                    return null;
                 case MAYORIGUAL:
                     
-                    break;
+                     return null;
                 case MENORIGUAL:
                     
-                    break;
+                     return null;
                     
                 case DIFERENTEQUE:
                      if(!ir.valor.toString().equals(valorExp.valor.toString()))
@@ -318,9 +319,13 @@ public class Archivo {
         for(int i=0;i<this.listaRegistros.size();i++){
             Registro r = this.listaRegistros.get(i);
             ItemRegistro item = r.elementos.get(indice);
+            if(item.tipo==TipoItemRegistro.CADENA){
+                return null;
+            }
             if(item.tipo.NUMERO==TipoItemRegistro.NUMERO){
                 suma+=Double.parseDouble(item.valor.toString());
             }else{
+                
                 return null;
             }
         }

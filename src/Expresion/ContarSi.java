@@ -10,6 +10,7 @@ import Datos.Archivo.TipoRelacional;
 import Entorno.Entorno;
 import Entorno.Simbolo;
 import Entorno.Simbolo.EnumTipoDato;
+import static views.Inicio.salidaConsola;
 
 /**
  *
@@ -40,6 +41,11 @@ public class ContarSi extends Expresion {
         Expresion resultadoValor = this.expValor.obtenerValor(ent);
         
         Expresion contarSi = arch.contarSi(idClave, relacional, resultadoValor);
+        if(contarSi==null){
+            salidaConsola.append("\nError Semantico no se puede sumar Cadenas:"+this.expClave.toString());
+            return null;
+        
+        }
         return new Literal(EnumTipoDato.NUMERICO, Double.parseDouble(contarSi.valor.toString()));
     }
 

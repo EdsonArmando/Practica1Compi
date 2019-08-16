@@ -217,7 +217,7 @@ public class Inicio extends javax.swing.JFrame {
             }
             for(ErrorLexico i : errL)
             {
-                archivo.println("<td>" + conts + "</td><td>" + i.lexema + "</td><td>" + "Sintactico" + "</td><td>" + i.fila + "</td><td>" + i.columna + "</td></tr>");
+                archivo.println("<td>" + conts + "</td><td>" + i.lexema + "</td><td>" + "Lexico" + "</td><td>" + i.fila + "</td><td>" + i.columna + "</td></tr>");
                 conts++;
             }
             archivo.println("</table>");

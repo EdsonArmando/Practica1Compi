@@ -9,6 +9,7 @@ import Datos.Archivo;
 import Entorno.Entorno;
 import Entorno.Simbolo;
 import Entorno.Simbolo.EnumTipoDato;
+import static views.Inicio.salidaConsola;
 
 /**
  *
@@ -35,6 +36,10 @@ public class Sumar extends Expresion{
         String idClave = resultadoClave.valor.toString();
         
         Expresion suma = arch.sumar(idClave);
+        if (suma==null){
+            salidaConsola.append("Error Semantico: no es posible sumar cadena:"+this.clave.valor.toString());
+            return null;
+        }
         return new Literal(EnumTipoDato.NUMERICO, Double.parseDouble(suma.valor.toString()));
     }
 

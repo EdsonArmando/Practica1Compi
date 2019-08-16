@@ -36,7 +36,7 @@ public class Imprimir extends Instruccion{
         for (int i = 0; i < this.expresiones.size(); i++) {
          Expresion resultado = this.expresiones.get(i).obtenerValor(ent);
             if(resultado.getTipo() == EnumTipoDato.ERROR){
-                System.out.println("La expresion es un error :(");
+                System.out.println("La expresion es un error");
                 return;
             }else{
                 salida += resultado.valor.toString();

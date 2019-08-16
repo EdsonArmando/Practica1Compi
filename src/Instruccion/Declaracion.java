@@ -36,11 +36,17 @@ public class Declaracion extends Instruccion{
     @Override
     public void ejecutar(Entorno ent) {
         Expresion resultado = expresion.obtenerValor(ent); //Resuelvo la expresión que le quiero asignar a la variable
+        if(resultado!=null){
         ent.insertar(this.nombreVariable, new Simbolo(this.tipoVariable, resultado.valor)); // Guardo la variable
         
         System.out.println("Ejecutando la instrucción Declaración --> TipoDato: " + 
                 this.tipoVariable.toString() + ", Nombre variable: " + this.nombreVariable + ", Valor: " + resultado.valor);
        
+        }else{
+        
+        salidaConsola.append("\nExistio un error Semantico");
+        }
+        
     }
 
     @Override

@@ -6,6 +6,7 @@
 package Entorno;
 
 import java.util.HashMap;
+import static views.Inicio.salidaConsola;
 
 /**
  *
@@ -56,7 +57,7 @@ public class Entorno {
             Simbolo sim = tabla.get(nombre);
             return sim;
         }
-        System.out.println("La variable '" + nombre + "' NO existe");
+        salidaConsola.append("La variable '" + nombre + "' NO existe");
         return null;
     }
 }

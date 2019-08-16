@@ -9,6 +9,7 @@ import Datos.Archivo;
 import Entorno.Entorno;
 import Entorno.Simbolo;
 import Entorno.Simbolo.EnumTipoDato;
+import static views.Inicio.salidaConsola;
 
 /**
  *
@@ -30,7 +31,10 @@ public class Promedio extends Expresion{
       Archivo arc=(Archivo)result.valor;
             
      Expresion resolVariable=arc.Promedio(String.valueOf(clave.valor));
-     
+     if(resolVariable==null){
+          salidaConsola.append("Error Semantico: no es posible sumar cadena:"+this.clave.valor.toString());
+         return null;
+     }
      return new Literal(EnumTipoDato.NUMERICO,Double.parseDouble(resolVariable.valor.toString()));
     }
 
